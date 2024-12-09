@@ -149,7 +149,6 @@
       color: #e74c3c;
     }
 
-    /* Styles for the select element */
     select {
       width: 100%;
       padding: 1rem;
@@ -177,9 +176,22 @@
       background-color: #fff;
     }
 
-    /* Add spacing above the select element */
     label[for="item"] {
       margin-top: 1.5rem;
+    }
+
+    /* Style for the checkbox label */
+    #online-label {
+      margin-top: 1rem;
+      display: inline-block;
+      font-weight: bold;
+      color: #555;
+    }
+
+    /* Style for the checkbox itself */
+    #online {
+      margin-right: 0.5rem;
+      transform: scale(1.5);
     }
 
     @media screen and (max-width: 768px) {
@@ -219,15 +231,18 @@
 
         <label for="item">Item:</label>
         <select id="item" name="item">
-          <option value="Product A - $10">The Basics mini - 25c</option>
-          <option value="Product B - $15">The Basics - 1€</option>
-          <option value="Product C - $20">Help with homework - 3€</option>
+          <option value="Product A - $10">Product A - $10</option>
+          <option value="Product B - $15">Product B - $15</option>
+          <option value="Product C - $20">Product C - $20</option>
         </select>
 
-        <label for="quantity">Quantité:</label>
+        <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" min="1" value="1" required>
 
-        <button type="submit">Acheter!</button>
+        <input type="checkbox" id="online" name="online">
+        <label for="online" id="online-label">Online</label>
+
+        <button type="submit">Place Order</button>
       </form>
       <div id="error-message"></div>
     </section>
@@ -236,6 +251,23 @@
   <script>
     const orderForm = document.getElementById('orderForm');
     const errorMessage = document.getElementById('error-message');
+    const itemSelect = document.getElementById('item');
+    const onlineCheckbox = document.getElementById('online');
+    const onlineLabel = document.getElementById('online-label');
+
+    function toggleOnlineCheckbox() {
+      const selectedItem = itemSelect.value;
+      if (selectedItem === "Product A - $10" || selectedItem === "Product B - $15") {
+        onlineCheckbox.style.display = 'inline-block';
+        onlineLabel.style.display = 'inline-block';
+      } else {
+        onlineCheckbox.style.display = 'none';
+        onlineLabel.style.display = 'none';
+      }
+    }
+
+    toggleOnlineCheckbox();
+    itemSelect.addEventListener('change', toggleOnlineCheckbox);
 
     orderForm.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -243,17 +275,17 @@
       const name = document.getElementById('name').value;
       const item = document.getElementById('item').value;
       const quantity = document.getElementById('quantity').value;
+      const online = document.getElementById('online').checked; // Get checkbox state
 
       if (!name || !item || !quantity) {
         errorMessage.textContent = 'Please fill in all fields.';
         return;
       }
 
-      // Your email address
       const yourEmail = "alexander.springgay@eleve.lfb.es";
 
-      // Construct Gmail compose URL with your email and the subject line
-      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${yourEmail}&su=Order from ${name}&body=${item} x ${quantity}`;
+      // Include "Online: true/false" in the email body
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${yourEmail}&su=Order from ${name}&body=${item} x ${quantity}%0D%0AOnline: ${online}`;
 
       window.open(gmailUrl, '_blank');
     });

@@ -181,15 +181,11 @@
     }
 
     #online-label {
-      margin-top: 1rem;
+      margin-top: 0rem;
       display: inline-block;
       font-weight: bold;
       color: #555;
-    }
-
-    #online {
-      margin-right: 0.5rem;
-      transform: scale(1.5);
+      margin-left: 0rem;
     }
 
     @media screen and (max-width: 768px) {
@@ -224,22 +220,22 @@
     <section>
       <h2>Place Your Order</h2>
       <form id="orderForm">
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required>
+        <label for="name">Your Email:</label>
+        <input type="text" id="name" name="email" required>
 
         <label for="item">Item:</label>
         <select id="item" name="item">
-          <option value="Product A - $10">Product A - $10</option>
-          <option value="Product B - $15">Product B - $15</option>
-          <option value="Product C - $20">Product C - $20</option>
+          <option value="Product A - $10">The Basics - Mini 25c</option>
+          <option value="Product B - $15">The Basics - 1EUR</option>
+          <option value="Product C - $20">Homework Help - 3EUR</option>
         </select>
 
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" min="1" value="1" required>
 
-        <div> 
+        <div>
           <input type="checkbox" id="online" name="online">
-          <label for="online" id="online-label">Online</label>
+          <label for="online" id="online-label">Online (You also get it on the computer)</label>
         </div>
 
         <button type="submit">Place Order</button>
@@ -257,7 +253,7 @@
 
     function toggleOnlineCheckbox() {
       const selectedItem = itemSelect.value;
-      if (selectedItem === "Product A - $10" || selectedItem === "Product B - $15") {
+      if (selectedItem === "Product A - $10" || selectedItem === "Product B - $15" || selectedItem === "Product C - $20") {
         onlineCheckbox.style.display = 'inline-block';
         onlineLabel.style.display = 'inline-block';
       } else {
